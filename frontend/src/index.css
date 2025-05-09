@@ -1,8 +1,8 @@
-@tailwind base;
-
-@custom-variant dark (&:is(.dark *));
+@import "tailwindcss";
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+/* @custom-variant dark (&:is(.dark *)); */
 
 @layer base {
   :root {
