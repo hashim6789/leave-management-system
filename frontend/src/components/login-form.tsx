@@ -2,30 +2,19 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginSchema } from "@/schema";
+
+import { useAuth } from "@/hooks/useAuth";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit = (data: LoginSchema) => {
-    console.log("Form data:", data);
-  };
+  const { register, handleSubmit, errors, login, isLoading, error } = useAuth();
 
   return (
     <form
       className={cn("flex flex-col gap-6", className)}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(login)} // ✅ connection
       {...props}
     >
       <div className="flex flex-col items-center gap-2 text-center">
@@ -34,6 +23,24 @@ export function LoginForm({
           Enter your email below to login to your account
         </p>
       </div>
+
+      <div className="grid gap-3">
+        <Label htmlFor="role">Role</Label>
+        <select
+          id="role"
+          className="border px-3 py-2 rounded-md"
+          {...register("role")}
+        >
+          <option value="">Select your role</option>
+          <option value="admin">Admin</option>
+          <option value="manager">Manager</option>
+          <option value="employee">Employee</option>
+        </select>
+        {errors.role && (
+          <span className="text-red-500 text-sm">{errors.role.message}</span>
+        )}
+      </div>
+
       <div className="grid gap-6">
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
@@ -45,26 +52,25 @@ export function LoginForm({
           />
           {errors.email && (
             <span className="text-red-500 text-sm">{errors.email.message}</span>
-          )}{" "}
+          )}
         </div>
+
         <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
-          </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password")} // Register the input field
-          />
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" {...register("password")} />
           {errors.password && (
             <span className="text-red-500 text-sm">
               {errors.password.message}
             </span>
-          )}{" "}
+          )}
         </div>
-        <Button type="submit" className="w-full">
-          Login
+
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
+
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
             Or continue with

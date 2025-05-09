@@ -9,6 +9,9 @@ export const loginSchema = z.object({
     .string()
     .min(6, "Password should be at least 6 characters long")
     .nonempty("Password is required"),
+  role: z.enum(["admin", "manager", "employee"], {
+    required_error: "Role is required",
+  }),
 });
 
 export type LoginSchema = z.infer<typeof loginSchema>;

@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import type { User } from "@/types";
 import { loginSchema, type LoginSchema } from "@/schema";
+import { fetchMe } from "@/store/thunks/fetchMe";
+import { clearUser, setUser } from "@/store/slices/AuthSlice";
+import { useAppDispatch } from "@/store/hook";
+import { loginService } from "@/services";
+import { useNavigate } from "react-router-dom";
 
 export function useAuth() {
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
-  // React Hook Form setup
   const {
     register,
     handleSubmit,
@@ -20,18 +22,24 @@ export function useAuth() {
     resolver: zodResolver(loginSchema), // Hook up Zod resolver
   });
 
-  // API call for login
   const login = async (data: LoginSchema) => {
     setIsLoading(true);
-    setError(null); // Reset error on each attempt
+    setError(null);
 
     try {
-      // Replace with your API endpoint
-      const response = await axios.post("/api/login", data);
-      setIsAuthenticated(true);
-      setUser(response.data); // Store user data after successful login
-    } catch (error) {
-      setError("Invalid credentials or network issue"); // Set error if authentication fails
+      const { data: user } = await loginService(data);
+      dispatch(setUser(user));
+      dispatch(fetchMe());
+
+      if (data.role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (data.role === "manager") {
+        navigate("/manager/home");
+      } else {
+        navigate("/employee/home");
+      }
+    } catch {
+      dispatch(clearUser());
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +52,5 @@ export function useAuth() {
     login,
     isLoading,
     error,
-    isAuthenticated,
-    user,
   };
 }

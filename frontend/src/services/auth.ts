@@ -1,17 +1,23 @@
 import type { LoginSchema } from "@/schema";
-import type { User } from "@/types";
-import axios from "axios";
+import type { ApiResponse, User } from "@/types";
+import {
+  axiosInstance,
+  getAxiosErrorMessage,
+  showError,
+  showSuccess,
+} from "@/lib";
+import { AuthMessages } from "@/constants";
 
-// Create an API service to handle authentication requests
-export const authService = {
-  async login(data: LoginSchema): Promise<User> {
-    try {
-      const response = await axios.post("/api/login", data);
-      return response.data;
-    } catch (error: any) {
-      throw new Error(
-        error.response?.data?.message || "Network or server error"
-      );
-    }
-  },
-};
+export async function loginService(
+  data: LoginSchema
+): Promise<ApiResponse<User>> {
+  try {
+    const response = await axiosInstance.post<User>("/api/login", data);
+    showSuccess(AuthMessages.LOGIN_SUCCESS);
+    return { data: response.data, status: response.status };
+  } catch (error: unknown) {
+    const message = getAxiosErrorMessage(error, AuthMessages.LOGIN_FAILED);
+    showError(message);
+    throw new Error(message);
+  }
+}

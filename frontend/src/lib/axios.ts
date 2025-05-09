@@ -36,3 +36,13 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => Promise.reject(error)
 );
+
+export function getAxiosErrorMessage(
+  error: unknown,
+  fallback = "Something went wrong"
+) {
+  if (axios.isAxiosError(error) && error.response?.data?.message) {
+    return error.response.data.message;
+  }
+  return fallback;
+}
