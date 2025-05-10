@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Role, User } from "@/types";
 import { fetchMe } from "../thunks/fetchMe";
+import { getUserProperty } from "@/utils";
 
 interface AuthState {
   user: User | null;
@@ -10,12 +11,16 @@ interface AuthState {
   loading: boolean;
   error: string | null;
 }
-
+const isBlocked = (getUserProperty("isBlocked") ?? false) as boolean;
+const role = (getUserProperty("role") ?? "employee") as Role;
+const isAuthenticated = (getUserProperty("isBlocked") ?? false) as boolean;
+const user =
+  (JSON.parse(localStorage.getItem("user") || "null") as User | null) ?? null;
 const initialState: AuthState = {
-  user: null,
-  currentRole: "employee",
-  isAuthenticated: false,
-  isBlocked: false,
+  user,
+  currentRole: role,
+  isAuthenticated,
+  isBlocked,
   loading: false,
   error: null,
 };

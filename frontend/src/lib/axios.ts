@@ -41,8 +41,8 @@ export function getAxiosErrorMessage(
   error: unknown,
   fallback = "Something went wrong"
 ) {
-  if (axios.isAxiosError(error) && error.response?.data?.message) {
-    return error.response.data.message;
+  if (axios.isAxiosError(error) && error.response?.data?.error) {
+    return error.response.data.error;
   }
   return fallback;
 }

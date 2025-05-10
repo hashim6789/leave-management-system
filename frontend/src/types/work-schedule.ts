@@ -1,17 +1,18 @@
 export type ScheduleType = "time" | "duration";
+export type Days = "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN";
 
 export interface DailySchedule {
-  day: string; // e.g., 'Monday'
+  day: Days;
   isDayOff: boolean;
-  startTime?: string; // only for time-based
-  endTime?: string; // only for time-based
-  duration?: number; // only for duration-based
 }
 
 export interface WorkSchedule {
-  _id: string;
+  _id?: string;
   name: string;
   type: ScheduleType;
   weeklySchedule: DailySchedule[];
   createdAt?: Date;
+  startTime?: string;
+  endTime?: string;
+  duration?: number;
 }

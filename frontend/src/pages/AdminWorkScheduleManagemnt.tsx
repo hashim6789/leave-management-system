@@ -1,50 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Calendar } from "lucide-react";
 import { Breadcrumb, TitleSection } from "@/shared/components";
 import ScheduleForm from "@/forms/WorkScheduleForm";
 import ScheduleTable from "@/tables/WorkScheduleTable";
-import type { WorkSchedule } from "@/types/work-schedule";
+import { useSchedules } from "@/hooks/useWorkSchedule";
 
 const AdminScheduleManagement: React.FC = () => {
-  const [schedules, setSchedules] = useState<WorkSchedule[]>([]);
-  const [editingSchedule, setEditingSchedule] = useState<WorkSchedule | null>(
-    null
-  );
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const addSchedule = (schedule: WorkSchedule) => {
-    setSchedules([...schedules, { ...schedule, createdAt: new Date() }]);
-    setIsModalOpen(false);
-  };
-
-  const updateSchedule = (updatedSchedule: WorkSchedule) => {
-    setSchedules(
-      schedules.map((s) =>
-        s.name === updatedSchedule.name ? updatedSchedule : s
-      )
-    );
-    setEditingSchedule(null);
-    setIsModalOpen(false);
-  };
-
-  const deleteSchedule = (name: string) => {
-    setSchedules(schedules.filter((s) => s.name !== name));
-  };
-
-  const startEditing = (schedule: WorkSchedule) => {
-    setEditingSchedule(schedule);
-    setIsModalOpen(true);
-  };
-
-  const openCreateModal = () => {
-    setEditingSchedule(null);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setEditingSchedule(null);
-    setIsModalOpen(false);
-  };
+  const {
+    schedules,
+    editingSchedule,
+    isModalOpen,
+    addSchedule,
+    updateSchedule,
+    deleteSchedule,
+    startEditing,
+    openCreateModal,
+    closeModal,
+  } = useSchedules();
 
   return (
     <div className="space-y-6 p-8">

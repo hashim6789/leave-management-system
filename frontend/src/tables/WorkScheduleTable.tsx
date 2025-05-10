@@ -1,5 +1,15 @@
-import type { WorkSchedule } from "@/types/work-schedule";
 import React from "react";
+import type { WorkSchedule, Days } from "@/types/work-schedule";
+
+const dayLabels: Record<Days, string> = {
+  MON: "Monday",
+  TUE: "Tuesday",
+  WED: "Wednesday",
+  THU: "Thursday",
+  FRI: "Friday",
+  SAT: "Saturday",
+  SUN: "Sunday",
+};
 
 interface ScheduleTableProps {
   schedules: WorkSchedule[];
@@ -35,41 +45,48 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {schedules.map((schedule) => (
-            <tr key={schedule.name}>
-              <td className="px-6 py-4 whitespace-nowrap">{schedule.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{schedule.type}</td>
-              <td className="px-6 py-4">
-                {schedule.weeklySchedule.map((day) => (
-                  <div key={day.day}>
-                    {day.day}:{" "}
-                    {day.isDayOff
-                      ? "Day Off"
-                      : schedule.type === "time"
-                      ? `${day.startTime} - ${day.endTime}`
-                      : `${day.duration} hours`}
-                  </div>
-                ))}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {schedule.createdAt?.toLocaleDateString()}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <button
-                  onClick={() => onEdit(schedule)}
-                  className="text-indigo-600 hover:text-indigo-900 mr-4"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => onDelete(schedule.name)}
-                  className="text-red-600 hover:text-red-900"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+          {schedules.map((schedule) => {
+            const workingDaysCount = schedule.weeklySchedule.filter(
+              (day) => !day.isDayOff
+            ).length;
+            return (
+              <tr key={schedule.name}>
+                <td className="px-6 py-4 whitespace-nowrap">{schedule.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{schedule.type}</td>
+                <td className="px-6 py-4">
+                  {schedule.weeklySchedule.map((day) => (
+                    <div key={day.day}>
+                      {dayLabels[day.day]}:{" "}
+                      {day.isDayOff
+                        ? "Day Off"
+                        : schedule.type === "time"
+                        ? `${schedule.startTime} - ${schedule.endTime}`
+                        : `${(
+                            (schedule.duration || 0) / workingDaysCount
+                          ).toFixed(2)} hours`}
+                    </div>
+                  ))}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {schedule.createdAt?.toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button
+                    onClick={() => onEdit(schedule)}
+                    className="text-indigo-600 hover:text-indigo-900 mr-4"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => onDelete(schedule.name)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
