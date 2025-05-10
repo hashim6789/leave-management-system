@@ -1,16 +1,41 @@
-import type { ApiResponse, WorkSchedule } from "@/types";
+import type { ApiResponse, PaginatedData, WorkSchedule } from "@/types";
 import { api, getAxiosErrorMessage, showError, showSuccess } from "@/lib";
-import { ScheduleMessages } from "@/constants";
+import { scheduleMessages } from "@/constants";
+
+interface GetSchedulesParams {
+  search?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+export async function getSchedulesService(
+  params: GetSchedulesParams
+): Promise<ApiResponse<PaginatedData<WorkSchedule>>> {
+  try {
+    const response = await api.get<PaginatedData<WorkSchedule>>(
+      "/work-schedules",
+      {
+        params,
+      }
+    );
+    return { data: response.data, status: response.status };
+  } catch (error: unknown) {
+    const message = getAxiosErrorMessage(error, scheduleMessages.FETCH_FAILED);
+    showError(message);
+    throw new Error(message);
+  }
+}
 
 export async function createScheduleService(
   data: Omit<WorkSchedule, "createdAt">
 ): Promise<ApiResponse<WorkSchedule>> {
   try {
     const response = await api.post<WorkSchedule>("/work-schedules", data);
-    showSuccess(ScheduleMessages.CREATE_SUCCESS);
+    showSuccess(scheduleMessages.CREATE_SUCCESS);
     return { data: response.data, status: response.status };
   } catch (error: unknown) {
-    const message = getAxiosErrorMessage(error, ScheduleMessages.CREATE_FAILED);
+    const message = getAxiosErrorMessage(error, scheduleMessages.CREATE_FAILED);
     showError(message);
     throw new Error(message);
   }
@@ -22,10 +47,10 @@ export async function updateScheduleService(
 ): Promise<ApiResponse<WorkSchedule>> {
   try {
     const response = await api.put<WorkSchedule>(`/work-schedules/${id}`, data);
-    showSuccess(ScheduleMessages.UPDATE_SUCCESS);
+    showSuccess(scheduleMessages.UPDATE_SUCCESS);
     return { data: response.data, status: response.status };
   } catch (error: unknown) {
-    const message = getAxiosErrorMessage(error, ScheduleMessages.UPDATE_FAILED);
+    const message = getAxiosErrorMessage(error, scheduleMessages.UPDATE_FAILED);
     showError(message);
     throw new Error(message);
   }
@@ -36,10 +61,10 @@ export async function deleteScheduleService(
 ): Promise<ApiResponse<void>> {
   try {
     const response = await api.delete(`/work-schedules/${id}`);
-    showSuccess(ScheduleMessages.DELETE_SUCCESS);
+    showSuccess(scheduleMessages.DELETE_SUCCESS);
     return { data: undefined, status: response.status };
   } catch (error: unknown) {
-    const message = getAxiosErrorMessage(error, ScheduleMessages.DELETE_FAILED);
+    const message = getAxiosErrorMessage(error, scheduleMessages.DELETE_FAILED);
     showError(message);
     throw new Error(message);
   }

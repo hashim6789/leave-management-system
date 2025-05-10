@@ -5,18 +5,27 @@ interface WorkScheduleState {
   schedules: WorkSchedule[];
   editingSchedule: WorkSchedule | null;
   isModalOpen: boolean;
+  searchQuery: string;
+  filterStatus: string;
+  currentPage: number;
 }
 
 const initialState: WorkScheduleState = {
   schedules: [],
   editingSchedule: null,
   isModalOpen: false,
+  searchQuery: "",
+  filterStatus: "all",
+  currentPage: 1,
 };
 
 const workScheduleSlice = createSlice({
   name: "workSchedule",
   initialState,
   reducers: {
+    setSchedules: (state, action: PayloadAction<WorkSchedule[]>) => {
+      state.schedules = action.payload;
+    },
     addSchedule: (state, action: PayloadAction<WorkSchedule>) => {
       state.schedules.push({ ...action.payload, createdAt: new Date() });
       state.isModalOpen = false;
@@ -49,6 +58,17 @@ const workScheduleSlice = createSlice({
       state.editingSchedule = null;
       state.isModalOpen = false;
     },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+      state.currentPage = 1; // Reset to first page on search
+    },
+    setFilterStatus: (state, action: PayloadAction<string>) => {
+      state.filterStatus = action.payload;
+      state.currentPage = 1; // Reset to first page on filter change
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
   },
 });
 
@@ -60,6 +80,10 @@ export const {
   openCreateModal,
   closeModal,
   resetForm,
+  setSearchQuery,
+  setFilterStatus,
+  setCurrentPage,
+  setSchedules,
 } = workScheduleSlice.actions;
 
 export const workScheduleReducers = workScheduleSlice.reducer;

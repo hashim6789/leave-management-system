@@ -1,14 +1,13 @@
 import React from "react";
 import { Clock, ChevronLeft, HelpCircle } from "lucide-react";
-
+import type { ErrorPageProps } from ".";
 import {
   getRoleContentForErrorPages,
   getThemeStyleForErrorPages,
-} from "../../../utils";
-import { ErrorPageProps } from ".";
+} from "@/utils";
 
 export const MaintenancePage: React.FC<ErrorPageProps> = ({
-  role = "learner",
+  role = "employee",
   theme = "light",
   onGoBack,
   onContactSupport,

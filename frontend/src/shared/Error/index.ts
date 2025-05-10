@@ -1,7 +1,7 @@
-import { ThemeType, UserRole } from "../../../types";
+import type { Role, ThemeType } from "@/types";
 
 export interface ErrorPageProps {
-  role: UserRole;
+  role: Role;
   theme: ThemeType;
   onRetry?: () => void;
   onGoBack?: () => void;

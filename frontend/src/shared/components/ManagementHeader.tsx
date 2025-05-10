@@ -1,5 +1,5 @@
+import { useThemeStyles } from "@/utils";
 import React from "react";
-import { useThemeStyles } from "../../../utils/color-theme.util";
 
 interface EntityManagementHeaderProps {
   //   title: string;

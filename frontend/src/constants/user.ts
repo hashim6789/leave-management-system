@@ -1,4 +1,4 @@
-export const UserMessages = {
+export const userMessages = {
   CREATE_SUCCESS: "User created successfully",
   UPDATE_SUCCESS: "User updated successfully",
   CREATE_FAILED: "Failed to create user",

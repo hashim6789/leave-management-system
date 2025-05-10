@@ -1,4 +1,4 @@
-import { FilterOption } from "../../../types";
+import type { FilterOption } from "@/types";
 
 export const userFilterOptions: FilterOption[] = [
   {

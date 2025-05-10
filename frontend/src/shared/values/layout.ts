@@ -1,6 +1,6 @@
+import type { SidebarContent } from "@/types";
 import { PieChart, Lightbulb, GraduationCap, Bookmark } from "lucide-react";
 import { BarChart, Calendar, Home, MessageSquare, Users } from "lucide-react";
-import { SidebarContent } from "../../../types";
 
 export const mentorSidebarItems: SidebarContent[] = [
   { path: "/mentor/dashboard", name: "Dashboard", icon: Home },

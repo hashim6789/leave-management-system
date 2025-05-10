@@ -1,12 +1,12 @@
 import { ChevronLeft, HelpCircle, Server } from "lucide-react";
+import type { ErrorPageProps } from ".";
 import {
   getRoleContentForErrorPages,
   getThemeStyleForErrorPages,
-} from "../../../utils";
-import { ErrorPageProps } from ".";
+} from "@/utils";
 
 export const ServerErrorPage: React.FC<ErrorPageProps> = ({
-  role = "learner",
+  role = "employee",
   theme = "light",
   onRetry,
   onGoBack,
