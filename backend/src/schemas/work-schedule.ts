@@ -75,3 +75,10 @@ export const workScheduleSchema = z
   );
 
 export type WorkScheduleData = z.infer<typeof workScheduleSchema>;
+
+export const workScheduleQuerySchema = z.object({
+  page: z.string().regex(/^\d+$/, { message: 'Page must be a number string' }),
+  limit: z.string().regex(/^\d+$/, { message: 'Limit must be a number string' }),
+  status: z.enum(['time', 'duration']).optional(),
+});
+export type IWorkScheduleQuery = z.infer<typeof workScheduleQuerySchema>;
