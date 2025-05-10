@@ -2,6 +2,7 @@ import Layout from "@/pages/Layout";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminDashboard from "@/pages/AdminDashboard";
 import AdminScheduleManagement from "@/pages/AdminWorkScheduleManagemnt";
+import AdminUserManagement from "@/pages/AdminUserManagement";
 
 export const AdminRoutes = () => [
   {
@@ -15,6 +16,7 @@ export const AdminRoutes = () => [
             children: [
               { path: "dashboard", element: <AdminDashboard /> },
               { path: "work-schedules", element: <AdminScheduleManagement /> },
+              { path: "users", element: <AdminUserManagement /> },
             ],
           },
         ],

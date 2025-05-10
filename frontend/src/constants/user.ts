@@ -7,4 +7,6 @@ export const userMessages = {
   USER_BLOCKED: "User blocked successfully.",
   USER_UNBLOCKED: "User unblocked successfully.",
   FETCH_USER_FAILED: "Failed to fetch user data",
+  DELETE_SUCCESS: "User deleted successfully.",
+  DELETE_FAILED: "Failed to delete user!",
 } as const;

@@ -21,6 +21,11 @@ export const AdminSidebarItems: SidebarContent[] = [
     name: "Work Schedules",
     icon: Users,
   },
+  {
+    path: "/admin/users",
+    name: "Users",
+    icon: Users,
+  },
   // {
   //   path: "/admin/mentors",
   //   name: "Mentors",
