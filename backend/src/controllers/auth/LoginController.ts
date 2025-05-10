@@ -11,7 +11,7 @@ import {
 } from '@/http/helpers';
 import { LoginResponse } from '@/types';
 import { loginSchema } from '@/schemas';
-import { ILoginService } from '@/services/interfaces';
+import { ILoginService } from '@/services/auth/interfaces';
 
 export class LoginController implements IController {
   constructor(

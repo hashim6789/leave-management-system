@@ -1,3 +1,4 @@
-export * from './httpStatus';
-export * from './AuthResponse';
-export * from './HttpResponse';
+export * from './http-status';
+export * from './auth-response';
+export * from './http-response';
+export * from './work-response';

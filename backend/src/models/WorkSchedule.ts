@@ -1,24 +1,35 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import { IWorkSchedule } from '../types/workSchedule';
+import { DailySchedule, ScheduleType } from '@/types';
+import mongoose, { Document, ObjectId, Schema } from 'mongoose';
 
-interface WorkScheduleDocument extends IWorkSchedule, Document {}
+export interface IWorkSchedule extends Document {
+  _id: ObjectId;
+  name: string;
+  type: ScheduleType;
+  weeklySchedule: DailySchedule[];
+  startTime: { type: String };
+  endTime: { type: String };
+  duration: { type: Number };
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 const dailyScheduleSchema = new Schema({
   day: { type: String, required: true },
   isDayOff: { type: Boolean, default: false },
-  startTime: { type: String },
-  endTime: { type: String },
-  duration: { type: Number },
 });
 
-const workScheduleSchema = new Schema<WorkScheduleDocument>({
-  name: { type: String, required: true },
-  type: { type: String, enum: ['time', 'duration'], required: true },
-  weeklySchedule: [dailyScheduleSchema],
-  createdAt: { type: Date, default: Date.now },
-});
-
-export const WorkSchedule = mongoose.model<WorkScheduleDocument>(
-  'WorkSchedule',
-  workScheduleSchema,
+const workScheduleSchema = new Schema<IWorkSchedule>(
+  {
+    name: { type: String, required: true },
+    type: { type: String, enum: ['time', 'duration'], required: true },
+    weeklySchedule: [dailyScheduleSchema],
+    startTime: { type: String },
+    endTime: { type: String },
+    duration: { type: Number },
+  },
+  {
+    timestamps: true,
+  },
 );
+
+export const WorkScheduleModel = mongoose.model<IWorkSchedule>('WorkSchedule', workScheduleSchema);

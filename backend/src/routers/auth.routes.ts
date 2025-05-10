@@ -14,7 +14,8 @@ authRouter.post('/login', async (request: Request, response: Response) => {
   if (adapter.statusCode === 200) {
     response.cookie(ENV.KEY_OF_ACCESS as string, adapter.body.accessToken, {
       httpOnly: false,
-      maxAge: 1 * 60 * 1000,
+      // maxAge: 1 * 60 * 1000,
+      maxAge: 1 * 24 * 60 * 60 * 1000, //for development
     });
     response.cookie(ENV.KEY_OF_REFRESH as string, adapter.body.refreshToken, {
       httpOnly: true,

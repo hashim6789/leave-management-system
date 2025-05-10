@@ -1,4 +1,4 @@
-export const AuthResponse = {
+export const authResponse = {
   NO_TOKEN_EXIST: "The tokens doesn't exist!",
   TOKEN_EXPIRED: 'The token expired!',
   INVALID_ACCESS_TOKEN: 'Invalid access token!',

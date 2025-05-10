@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Role } from '@/types';
-import { AuthResponse, HttpResponse, HttpStatus } from '@/constants';
+import { authResponse, HttpResponse, HttpStatus } from '@/constants';
 import { JwtProvider } from '@/providers/implementations/JwtProvider';
 
 export function verifyTokenMiddleware(allowedRoles: Role[]) {
@@ -10,7 +10,7 @@ export function verifyTokenMiddleware(allowedRoles: Role[]) {
 
       if (!accessToken || !refreshToken) {
         res.status(HttpStatus.UNAUTHORIZED).json({
-          message: AuthResponse.NO_TOKEN_EXIST,
+          message: authResponse.NO_TOKEN_EXIST,
         });
         return;
       }
@@ -19,14 +19,14 @@ export function verifyTokenMiddleware(allowedRoles: Role[]) {
       const payload = await jwtProvider.verifyToken(accessToken);
       if (!payload) {
         res.status(HttpStatus.UNAUTHORIZED).json({
-          message: AuthResponse.TOKEN_EXPIRED,
+          message: authResponse.TOKEN_EXPIRED,
         });
         return;
       }
 
       if (!allowedRoles.includes(payload.role)) {
         res.status(HttpStatus.FORBIDDEN).json({
-          message: AuthResponse.NO_ACCESS_PAYLOAD,
+          message: authResponse.NO_ACCESS_PAYLOAD,
         });
         return;
       }

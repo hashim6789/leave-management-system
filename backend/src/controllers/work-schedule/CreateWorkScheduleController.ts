@@ -9,18 +9,17 @@ import {
   IHttpResponse,
   IHttpSuccess,
 } from '@/http/helpers';
-import { authSchema } from '@/schemas';
-import { IFetchCurrentUserService } from '@/services/auth/interfaces';
+import { WorkScheduleData, workScheduleSchema } from '@/schemas';
 import { IUser } from '@/models';
-import { IAuthUser } from '@/types/auth';
+import { ICreateWorkScheduleService } from '@/services';
 
-export class FetchCurrentUserController implements IController {
+export class CreateWorkScheduleController implements IController {
   constructor(
-    private fetchCurrentUserService: IFetchCurrentUserService,
+    private createWorkScheduleService: ICreateWorkScheduleService,
     private httpErrors: IHttpErrors = new HttpErrors(),
     private httpSuccess: IHttpSuccess = new HttpSuccess(),
   ) {
-    this.fetchCurrentUserService = fetchCurrentUserService;
+    this.createWorkScheduleService = createWorkScheduleService;
     this.httpErrors = httpErrors;
     this.httpSuccess = httpSuccess;
   }
@@ -30,8 +29,17 @@ export class FetchCurrentUserController implements IController {
     let response: ResponseDTO;
 
     if (httpRequest.body && Object.keys(httpRequest.body).length > 0) {
-      const { auth } = httpRequest.body as IAuthUser;
-      const parseResult = authSchema.safeParse(auth);
+      const { name, weeklySchedule, type, duration, _id, startTime, endTime } =
+        httpRequest.body as WorkScheduleData;
+      const parseResult = workScheduleSchema.safeParse({
+        name,
+        type,
+        weeklySchedule,
+        _id,
+        duration,
+        startTime,
+        endTime,
+      });
 
       if (!parseResult.success) {
         const firstError = parseResult.error.errors[0]?.message || 'Invalid input';
@@ -39,9 +47,9 @@ export class FetchCurrentUserController implements IController {
         return new HttpResponse(error.statusCode, { error: firstError });
       }
 
-      const authRequestDTO = parseResult.data;
+      const createWorkScheduleDTO = parseResult.data;
 
-      response = await this.fetchCurrentUserService.execute(authRequestDTO);
+      response = await this.createWorkScheduleService.execute(createWorkScheduleDTO);
 
       if (!response.success) {
         error = this.httpErrors.error_400();

@@ -1,9 +1,9 @@
 import { IUsersRepository } from '@/repositories';
-import { ILoginService } from '../interfaces';
 import { IJwtProvider, IPasswordHasher } from '@/providers/interfaces';
 import { LoginSchema } from '@/schemas';
 import { ResponseDTO } from '@/dtos';
-import { AuthResponse } from '@/constants';
+import { authResponse } from '@/constants';
+import { ILoginService } from '../interfaces';
 
 export class LoginService implements ILoginService {
   constructor(
@@ -22,14 +22,14 @@ export class LoginService implements ILoginService {
 
       if (!user) {
         return {
-          data: { error: AuthResponse.INCORRECT_EMAIL_OR_PASSWORD },
+          data: { error: authResponse.INCORRECT_EMAIL_OR_PASSWORD },
           success: false,
         };
       }
 
       if (user.isBlocked || user.role !== role) {
         return {
-          data: { error: AuthResponse.USER_IS_BLOCKED },
+          data: { error: authResponse.USER_IS_BLOCKED },
           success: false,
         };
       }
@@ -38,7 +38,7 @@ export class LoginService implements ILoginService {
       if (!isValidPassword) {
         return {
           success: false,
-          data: { error: AuthResponse.INCORRECT_EMAIL_OR_PASSWORD },
+          data: { error: authResponse.INCORRECT_EMAIL_OR_PASSWORD },
         };
       }
 
@@ -48,7 +48,7 @@ export class LoginService implements ILoginService {
           role: user.role,
           email: user.email,
         },
-        '1h',
+        '1d',
       );
       const refreshToken = await this.jwtProvider.generateToken(
         {

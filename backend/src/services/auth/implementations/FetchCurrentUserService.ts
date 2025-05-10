@@ -1,7 +1,7 @@
 import { IUsersRepository } from '@/repositories';
-import { IFetchCurrentUserService } from '../interfaces';
 import { AuthData, ResponseDTO } from '@/dtos';
-import { AuthResponse } from '@/constants';
+import { authResponse } from '@/constants';
+import { IFetchCurrentUserService } from '../interfaces';
 
 export class FetchCurrentUserService implements IFetchCurrentUserService {
   constructor(private userRepository: IUsersRepository) {
@@ -13,7 +13,7 @@ export class FetchCurrentUserService implements IFetchCurrentUserService {
       const user = await this.userRepository.findById(userId);
       if (!user) {
         return {
-          data: { error: AuthResponse.NO_USER_EXIST },
+          data: { error: authResponse.NO_USER_EXIST },
           success: false,
         };
       }

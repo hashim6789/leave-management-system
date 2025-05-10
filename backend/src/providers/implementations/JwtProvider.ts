@@ -10,7 +10,7 @@ export class JwtProvider implements IJwtProvider {
    * @param expiresIn - Expiration time (default: 1h)
    * @returns JWT token
    */
-  async generateToken(payload: JwtPayload, expiresIn: '1h' | '5d' = '1h'): Promise<string> {
+  async generateToken(payload: JwtPayload, expiresIn: '1d' | '5d' = '1d'): Promise<string> {
     const secretKey: string = ENV.JWT_SECRET ?? '';
 
     if (!secretKey) {
