@@ -1,30 +1,29 @@
-import { createWorkScheduleComposer } from '@/composers';
-import { getWorkScheduleComposer } from '@/composers/work-schedule/getWorkScheduleComposer';
+import { createUserComposer, getUsersComposer } from '@/composers';
 import { expressAdapter } from '@/http/adapter';
 import { verifyTokenMiddleware } from '@/middlewares';
 import { Request, Response, Router } from 'express';
 
 /**
- * Router for handling workSchedule-related routes.
+ * Router for handling user-related routes.
  */
-const workScheduleRouter = Router();
+const userRouter = Router();
 
-workScheduleRouter.post(
+userRouter.post(
   '/',
   verifyTokenMiddleware(['admin']),
   async (request: Request, response: Response) => {
-    const adapter = await expressAdapter(request, createWorkScheduleComposer());
+    const adapter = await expressAdapter(request, createUserComposer());
     response.status(adapter.statusCode).json(adapter.body);
   },
 );
 
-workScheduleRouter.get(
+userRouter.get(
   '/',
   verifyTokenMiddleware(['admin', 'approver']),
   async (request: Request, response: Response) => {
-    const adapter = await expressAdapter(request, getWorkScheduleComposer());
+    const adapter = await expressAdapter(request, getUsersComposer());
     response.status(adapter.statusCode).json(adapter.body);
   },
 );
 
-export { workScheduleRouter };
+export { userRouter };

@@ -29,7 +29,7 @@ authRouter.post('/login', async (request: Request, response: Response) => {
 
 authRouter.get(
   '/me',
-  verifyTokenMiddleware(['admin', 'employee', 'manager']),
+  verifyTokenMiddleware(['admin', 'employee', 'approver']),
 
   async (request: Request, response: Response) => {
     const adapter = await expressAdapter(request, fetchCurrentUserComposer());
