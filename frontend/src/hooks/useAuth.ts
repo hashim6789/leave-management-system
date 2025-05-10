@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginSchema } from "@/schema";
-import { fetchMe } from "@/store/thunks/fetchMe";
+import { loginSchema, type LoginSchema, type LogoutSchema } from "@/schema";
 import { clearUser, setUser } from "@/store/slices/AuthSlice";
 import { useAppDispatch } from "@/store/hook";
-import { loginService } from "@/services";
+import { loginService, logoutService } from "@/services";
 import { useNavigate } from "react-router-dom";
 
 export function useAuth() {
@@ -29,7 +28,6 @@ export function useAuth() {
     try {
       const { data: user } = await loginService(data);
       dispatch(setUser(user));
-      dispatch(fetchMe());
 
       if (data.role === "admin") {
         navigate("/admin/dashboard");
@@ -45,11 +43,27 @@ export function useAuth() {
     }
   };
 
+  const logout = async (data: LogoutSchema) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { status } = await logoutService(data);
+      if (status === 200) {
+        dispatch(clearUser());
+        navigate("/login");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     register,
     handleSubmit,
     errors,
     login,
+    logout,
     isLoading,
     error,
   };

@@ -15,3 +15,12 @@ export const loginSchema = z.object({
 });
 
 export type LoginSchema = z.infer<typeof loginSchema>;
+
+export const logoutSchema = z.object({
+  userId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid MongoDB ObjectId"),
+  role: z.enum(["admin", "manager", "employee"], {
+    required_error: "Role is required",
+  }),
+});
+
+export type LogoutSchema = z.infer<typeof logoutSchema>;

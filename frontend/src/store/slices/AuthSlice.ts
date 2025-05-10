@@ -31,6 +31,12 @@ const authSlice = createSlice({
       state.isBlocked = user.isBlocked;
       state.currentRole = user.role;
       state.error = null;
+
+      try {
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch (error) {
+        console.error("Failed to store tokens in localStorage:", error);
+      }
     },
     clearUser: (state) => {
       state.user = null;
@@ -38,6 +44,13 @@ const authSlice = createSlice({
       state.currentRole = "employee";
       state.isBlocked = false;
       state.error = null;
+
+      try {
+        localStorage.removeItem("data");
+        localStorage.removeItem("user");
+      } catch (error) {
+        console.error("Failed to delete tokens in localStorage:", error);
+      }
     },
     blockUser: (state, action: PayloadAction<boolean>) => {
       state.isBlocked = action.payload;
