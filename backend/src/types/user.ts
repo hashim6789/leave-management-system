@@ -1,3 +1,5 @@
+import { Group } from './group';
+
 export type Role = 'admin' | 'approver' | 'employee';
 
 export interface User {
@@ -9,6 +11,7 @@ export interface User {
   username: string;
   createdAt: Date;
   updatedAt: Date;
+  groupId?: string;
 }
 
 export type JwtPayload = {
@@ -21,4 +24,8 @@ export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
   user: User;
+}
+
+export interface IPopulatedUser extends User {
+  group: Group;
 }

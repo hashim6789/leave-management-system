@@ -10,7 +10,7 @@ export class GetGroupService implements IGetGroupsService {
     this.groupRepository = groupRepository;
   }
 
-  async execute({ page, limit, isListed, search }: IGroupQuery): Promise<ResponseDTO> {
+  async execute({ page = '1', limit = '5', isListed, search }: IGroupQuery): Promise<ResponseDTO> {
     try {
       const filter: FilterQuery<IGroup> =
         isListed === 'true'

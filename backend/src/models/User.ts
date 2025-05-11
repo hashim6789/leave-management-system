@@ -10,6 +10,7 @@ export interface IUser extends Document {
   password: string;
   isBlocked: boolean;
   role: Role;
+  group: ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,6 +26,7 @@ export const userSchema = new Schema<IUser>(
       enum: ['admin', 'approver', 'employee'],
       required: true,
     },
+    group: { type: Schema.Types.ObjectId, ref: 'Groups' },
   },
   {
     timestamps: true,

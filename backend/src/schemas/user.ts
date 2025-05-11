@@ -8,6 +8,7 @@ export const userSchema = z.object({
     errorMap: () => ({ message: 'Role must be either Approver or Employee' }),
   }),
   isBlocked: z.boolean(),
+  groupId: z.string().regex(/^[a-f\d]{24}$/i, 'Invalid MongoDB ObjectId'),
 });
 
 export type UserData = z.infer<typeof userSchema>;

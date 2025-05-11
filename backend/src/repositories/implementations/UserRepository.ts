@@ -1,8 +1,8 @@
 import { IUser } from '@/models/User';
 import { BaseRepository } from './BaseRepository';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { IUsersRepository } from '../interfaces';
-import { User } from '@/types';
+import { PaginatedData, User } from '@/types';
 
 export class UserRepository extends BaseRepository<IUser> implements IUsersRepository {
   constructor(model: Model<IUser>) {
@@ -24,5 +24,30 @@ export class UserRepository extends BaseRepository<IUser> implements IUsersRepos
       };
     }
     return null;
+  }
+
+  async find(
+    filter: FilterQuery<IUser>,
+    page: string,
+    limit: string,
+    sort: Record<string, 1 | -1>,
+  ): Promise<PaginatedData<IUser>> {
+    const pageNum = parseInt(page, 10) || 1;
+    const limitNum = parseInt(limit, 10) || 10;
+
+    const [data, total] = await Promise.all([
+      this.model
+        .find(filter)
+        .populate('group')
+        .sort(sort)
+        .skip((pageNum - 1) * limitNum)
+        .limit(limitNum),
+      this.model.countDocuments(filter),
+    ]);
+
+    return {
+      data,
+      total,
+    };
   }
 }

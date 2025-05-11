@@ -29,12 +29,13 @@ export class CreateUserController implements IController {
     let response: ResponseDTO;
 
     if (httpRequest.body && Object.keys(httpRequest.body).length > 0) {
-      const { username, email, isBlocked, role } = httpRequest.body as UserData;
+      const { username, email, isBlocked, role, groupId } = httpRequest.body as UserData;
       const parseResult = userSchema.safeParse({
         username,
         email,
         isBlocked,
         role,
+        groupId,
       });
 
       if (!parseResult.success) {

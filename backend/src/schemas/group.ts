@@ -16,8 +16,8 @@ export const createGroupSchema = groupSchema.omit({
 export type CreateGroupData = z.infer<typeof createGroupSchema>;
 
 export const groupQuerySchema = z.object({
-  page: z.string().regex(/^\d+$/, { message: 'Page must be a number string' }),
-  limit: z.string().regex(/^\d+$/, { message: 'Limit must be a number string' }),
+  page: z.string().regex(/^\d+$/, { message: 'Page must be a number string' }).optional(),
+  limit: z.string().regex(/^\d+$/, { message: 'Limit must be a number string' }).optional(),
   search: z.string().optional(),
   isListed: z.enum(['true', 'false']).optional(),
 });
