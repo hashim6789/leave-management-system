@@ -20,4 +20,6 @@ export const ENV = {
   FRONTEND_URL: getEnvVariable('FRONTEND_URL'),
   KEY_OF_ACCESS: getEnvVariable('KEY_OF_ACCESS'),
   KEY_OF_REFRESH: getEnvVariable('KEY_OF_REFRESH'),
+  EMAIL_USER: getEnvVariable('EMAIL_USER'),
+  EMAIL_PASS: getEnvVariable('EMAIL_PASS'),
 };

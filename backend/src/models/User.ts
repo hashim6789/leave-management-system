@@ -22,7 +22,7 @@ export const userSchema = new Schema<IUser>(
     isBlocked: { type: Boolean, default: false },
     role: {
       type: String,
-      enum: ['admin', 'manager', 'employee'],
+      enum: ['admin', 'approver', 'employee'],
       required: true,
     },
   },

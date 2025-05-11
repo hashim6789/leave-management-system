@@ -1,5 +1,5 @@
 import { IUsersRepository } from '@/repositories';
-import { IJwtProvider, IPasswordHasher } from '@/providers/interfaces';
+import { IJwtProvider, IPasswordProvider } from '@/providers/interfaces';
 import { LoginSchema } from '@/schemas';
 import { ResponseDTO } from '@/dtos';
 import { authResponse } from '@/constants';
@@ -8,7 +8,7 @@ import { ILoginService } from '../interfaces';
 export class LoginService implements ILoginService {
   constructor(
     private userRepository: IUsersRepository,
-    private passwordHasher: IPasswordHasher,
+    private passwordHasher: IPasswordProvider,
     private jwtProvider: IJwtProvider,
   ) {
     this.userRepository = userRepository;
@@ -27,9 +27,16 @@ export class LoginService implements ILoginService {
         };
       }
 
-      if (user.isBlocked || user.role !== role) {
+      if (user.isBlocked) {
         return {
           data: { error: authResponse.USER_IS_BLOCKED },
+          success: false,
+        };
+      }
+
+      if (user.role !== role) {
+        return {
+          data: { error: authResponse.INVALID_ROLE },
           success: false,
         };
       }

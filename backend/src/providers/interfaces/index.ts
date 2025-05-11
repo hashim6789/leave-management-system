@@ -1,2 +1,3 @@
 export { IJwtProvider } from './IJwtProvider';
-export { IPasswordHasher } from './IPasswordHasher';
+export { IPasswordProvider } from './IPasswordProvider';
+export { IMailProvider } from './IMailProvider';
