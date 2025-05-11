@@ -3,7 +3,9 @@ import { Pagination } from "@/shared/components";
 import FilterSearchBar from "@/shared/components/FilterSearchBar";
 import { LoadingState, NoContentState } from "@/shared/Error";
 import type { Group } from "@/types";
+import { useGroups } from "@/hooks/useGroups";
 import { useGroupsTable } from "@/hooks/useGroupTable";
+import GroupForm from "@/forms/GroupForm";
 
 const filterOptions = ["all", "listed", "unlisted"];
 
@@ -19,13 +21,27 @@ const GroupTable: React.FC = () => {
     handlePageChange,
     handleSearchChange,
     handleFilterChange,
-    handleEditGroup,
-    handleDeleteGroup,
   } = useGroupsTable({ itemsPerPage: 5 });
+
+  const {
+    editingGroup,
+    isModalOpen,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+    addGroup,
+    updateGroup,
+    removeGroup,
+  } = useGroups();
 
   return (
     <div>
-      {/* Search and Filter */}
+      <button
+        onClick={openCreateModal}
+        className="mb-4 px-4 py-2 bg-indigo-600 text-white rounded-md"
+      >
+        Add Group
+      </button>
       <FilterSearchBar
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
@@ -34,13 +50,9 @@ const GroupTable: React.FC = () => {
         placeholder="Search groups by name..."
         options={filterOptions}
       />
-
-      {/* Loading and Error States */}
       {loading && <LoadingState />}
       {error && <div className="text-red-500 text-center">{error}</div>}
       {!loading && !error && data.length === 0 && <NoContentState />}
-
-      {/* Table */}
       {data.length > 0 && (
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -50,6 +62,9 @@ const GroupTable: React.FC = () => {
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Description
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Work Schedule
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
@@ -67,17 +82,20 @@ const GroupTable: React.FC = () => {
                   {group.description || "N/A"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                  {group.workSchedule?.name || "No Schedule"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
                   {group.isListed ? "Listed" : "Unlisted"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
-                    onClick={() => handleEditGroup(group)}
+                    onClick={() => openEditModal(group)}
                     className="text-indigo-600 hover:text-indigo-900 mr-4"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteGroup(group._id as string)}
+                    onClick={() => removeGroup(group._id!)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete
@@ -88,13 +106,20 @@ const GroupTable: React.FC = () => {
           </tbody>
         </table>
       )}
-
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <GroupForm
+            onSubmit={editingGroup ? updateGroup : addGroup}
+            initialGroup={editingGroup}
+            onCancel={closeModal}
+          />
+        </div>
+      )}
     </div>
   );
 };
