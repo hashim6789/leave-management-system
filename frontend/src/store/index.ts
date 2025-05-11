@@ -3,6 +3,7 @@ import { authReducer } from "./slices/AuthSlice";
 import { themeReducers } from "./slices/themeSlice";
 import { workScheduleReducers } from "./slices/workScheduleSlice";
 import { usersReducers } from "./slices/userSlice";
+import { groupsReducer } from "./slices/groupSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     theme: themeReducers,
     workSchedule: workScheduleReducers,
     users: usersReducers,
+    groups: groupsReducer,
   },
 });
 

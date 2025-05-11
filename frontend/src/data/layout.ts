@@ -26,6 +26,11 @@ export const AdminSidebarItems: SidebarContent[] = [
     name: "Users",
     icon: Users,
   },
+  {
+    path: "/admin/groups",
+    name: "User Groups",
+    icon: Users,
+  },
   // {
   //   path: "/admin/mentors",
   //   name: "Mentors",

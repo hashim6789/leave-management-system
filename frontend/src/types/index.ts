@@ -4,3 +4,4 @@ export * from "./theme";
 export * from "./layout";
 export * from "./page";
 export * from "./work-schedule";
+export * from "./group";
