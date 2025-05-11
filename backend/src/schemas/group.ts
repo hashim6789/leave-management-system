@@ -5,6 +5,7 @@ export const groupSchema = z.object({
   name: z.string().min(1, 'name is required'),
   description: z.string().optional(),
   isListed: z.boolean(),
+  workScheduleId: z.string().regex(/^[a-f\d]{24}$/i, 'Invalid MongoDB ObjectId'),
 });
 
 export type GroupData = z.infer<typeof groupSchema>;

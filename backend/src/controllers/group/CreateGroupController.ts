@@ -29,11 +29,12 @@ export class CreateGroupController implements IController {
     let response: ResponseDTO;
 
     if (httpRequest.body && Object.keys(httpRequest.body).length > 0) {
-      const { name, description, isListed } = httpRequest.body as GroupData;
+      const { name, description, isListed, workScheduleId } = httpRequest.body as GroupData;
       const parseResult = groupSchema.safeParse({
         name,
         description,
         isListed,
+        workScheduleId,
       });
 
       if (!parseResult.success) {

@@ -2,6 +2,7 @@ import { ICreateGroupDTO, ResponseDTO } from '@/dtos';
 import { groupResponse } from '@/constants';
 import { ICreateGroupService } from '../interfaces';
 import { IGroupsRepository } from '@/repositories';
+import { ObjectId } from 'mongoose';
 
 export class CreateGroupService implements ICreateGroupService {
   constructor(private groupRepository: IGroupsRepository) {
@@ -20,7 +21,11 @@ export class CreateGroupService implements ICreateGroupService {
         };
       }
 
-      const createdGroup = await this.groupRepository.create(data);
+      const workScheduleId = data.workScheduleId as unknown as ObjectId;
+      const createdGroup = await this.groupRepository.create({
+        ...data,
+        workSchedule: workScheduleId,
+      });
 
       return {
         data: createdGroup,

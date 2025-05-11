@@ -7,6 +7,7 @@ export interface IGroup extends Document {
   name: string;
   description: string;
   isListed: boolean;
+  workSchedule: ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +17,7 @@ export const groupSchema = new Schema<IGroup>(
     name: { type: String, required: true },
     description: { type: String },
     isListed: { type: Boolean, default: true },
+    workSchedule: { type: Schema.Types.ObjectId, ref: 'WorkSchedule', required: true },
   },
   {
     timestamps: true,

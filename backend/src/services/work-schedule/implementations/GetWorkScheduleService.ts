@@ -8,7 +8,7 @@ export class GetWorkSchedulesService implements IGetWorkSchedulesService {
     this.workScheduleRepository = workScheduleRepository;
   }
 
-  async execute({ page, limit, status }: IWorkScheduleQuery): Promise<ResponseDTO> {
+  async execute({ page = '1', limit = '5', status }: IWorkScheduleQuery): Promise<ResponseDTO> {
     try {
       const filter = status ? { type: status } : {};
       const paginatedWorkSchedules = await this.workScheduleRepository.find(
