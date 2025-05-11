@@ -6,4 +6,4 @@ export const authResponse = {
   NO_USER_EXIST: 'No user exist!',
   INCORRECT_EMAIL_OR_PASSWORD: 'Incorrect email or password!',
   USER_IS_BLOCKED: 'User is blocked!',
-};
+} as const;
