@@ -52,7 +52,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, role }) => {
     { name: "Teal", value: "teal" },
   ];
 
-  const userRole = role === "admin" ? "Admin" : "Mentor";
+  const userRole =
+    role === "admin" ? "Admin" : role === "approver" ? "Approver" : "Employee";
 
   return (
     <nav

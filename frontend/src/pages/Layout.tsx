@@ -1,7 +1,11 @@
 import { Footer } from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import { AdminSidebarItems, mentorSidebarItems } from "@/data";
+import {
+  AdminSidebarItems,
+  approverSidebarItems,
+  employeeSidebarItems,
+} from "@/data";
 import type { Role } from "@/types";
 import { useThemeStyles } from "@/utils";
 import React, { useState } from "react";
@@ -22,7 +26,11 @@ const Layout: React.FC<LayoutProps> = ({ role }) => {
   };
 
   const sidebarContents =
-    role === "admin" ? AdminSidebarItems : mentorSidebarItems;
+    role === "admin"
+      ? AdminSidebarItems
+      : role === "approver"
+      ? approverSidebarItems
+      : employeeSidebarItems;
 
   return (
     <div

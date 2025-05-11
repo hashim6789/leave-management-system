@@ -9,7 +9,7 @@ export const loginSchema = z.object({
     .string()
     .min(6, "Password should be at least 6 characters long")
     .nonempty("Password is required"),
-  role: z.enum(["admin", "manager", "employee"], {
+  role: z.enum(["admin", "approver", "employee"], {
     required_error: "Role is required",
   }),
 });
@@ -18,7 +18,7 @@ export type LoginSchema = z.infer<typeof loginSchema>;
 
 export const logoutSchema = z.object({
   userId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid MongoDB ObjectId"),
-  role: z.enum(["admin", "manager", "employee"], {
+  role: z.enum(["admin", "approver", "employee"], {
     required_error: "Role is required",
   }),
 });

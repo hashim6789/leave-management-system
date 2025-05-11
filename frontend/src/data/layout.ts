@@ -2,12 +2,19 @@ import type { SidebarContent } from "@/types";
 import { PieChart } from "lucide-react";
 import { BarChart, Calendar, Home, MessageSquare, Users } from "lucide-react";
 
-export const mentorSidebarItems: SidebarContent[] = [
+export const approverSidebarItems: SidebarContent[] = [
   { path: "/mentor/dashboard", name: "Dashboard", icon: Home },
   { path: "/mentor/courses", name: "Courses", icon: Users },
   { path: "/mentor/meetings", name: "Meetings", icon: Calendar },
   { path: "/mentor/chats", name: "Chat Groups", icon: MessageSquare },
   { path: "/mentor/earnings", name: "Earnings", icon: BarChart },
+];
+
+export const employeeSidebarItems: SidebarContent[] = [
+  { path: "/employee/dashboard", name: "Dashboard", icon: Home },
+  { path: "/employee/attendance", name: "Attendance", icon: Calendar },
+  { path: "/employee/leaves", name: "Leaves", icon: MessageSquare },
+  { path: "/employee/earnings", name: "Reports", icon: BarChart },
 ];
 
 export const AdminSidebarItems: SidebarContent[] = [

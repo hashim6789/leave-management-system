@@ -31,7 +31,7 @@ export function useAuth() {
 
       if (data.role === "admin") {
         navigate("/admin/dashboard");
-      } else if (data.role === "manager") {
+      } else if (data.role === "approver") {
         navigate("/manager/home");
       } else {
         navigate("/employee/home");

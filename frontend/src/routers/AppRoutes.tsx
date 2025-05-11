@@ -4,7 +4,7 @@ import { AdminRoutes } from "./AdminRoutes";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { EmployeeRoutes } from "./EmployeeRoutes";
-import { ManagerRoutes } from "./ManagerRoutes";
+import { ApproverRoutes } from "./ApproverRoutes";
 import { fetchMe } from "@/store/thunks/fetchMe";
 import { AuthenticationPage } from "@/pages";
 import BlockedPage from "@/pages/BlockedPage";
@@ -22,7 +22,7 @@ const AppRoutes: React.FC = () => {
   const routes = [
     ...AdminRoutes(),
     ...EmployeeRoutes(),
-    ...ManagerRoutes(),
+    ...ApproverRoutes(),
     {
       path: "/login",
       element: user ? (

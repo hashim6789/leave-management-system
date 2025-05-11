@@ -33,7 +33,7 @@ export function LoginForm({
         >
           <option value="">Select your role</option>
           <option value="admin">Admin</option>
-          <option value="manager">Manager</option>
+          <option value="approver">Approver</option>
           <option value="employee">Employee</option>
         </select>
         {errors.role && (
