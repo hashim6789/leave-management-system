@@ -11,8 +11,9 @@ export interface WorkSchedule {
   name: string;
   type: ScheduleType;
   weeklySchedule: DailySchedule[];
-  createdAt?: Date;
   startTime?: string;
   endTime?: string;
-  duration?: number;
+  requiredHours?: number;
+  requiresApproval?: boolean;
+  createdAt?: Date;
 }

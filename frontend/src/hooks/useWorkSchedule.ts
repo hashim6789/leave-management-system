@@ -6,7 +6,7 @@ import {
   startEditing,
   openCreateModal,
   closeModal,
-} from "@/store/slices/workScheduleSlice";
+} from "@/store/slices/workScheduleManagementSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   createScheduleService,

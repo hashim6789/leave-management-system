@@ -7,7 +7,7 @@ import {
   deleteGroup,
   startEditing,
   setGroups,
-} from "@/store/slices/groupSlice";
+} from "@/store/slices/groupManagementSlice";
 import { getGroupsService } from "@/services";
 import type { Group } from "@/types";
 import { useDebounce } from "./useDebounce";

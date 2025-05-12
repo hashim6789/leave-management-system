@@ -5,8 +5,6 @@ import FilterSearchBar from "@/shared/components/FilterSearchBar";
 import { LoadingState, NoContentState } from "@/shared/Error";
 import type { User } from "@/types";
 import { useUsersTable } from "@/hooks/useUserTable";
-import { useUsers } from "@/hooks/useUser";
-import UserForm from "@/forms/UsersForm";
 
 const filterOptions = ["all", "approver", "employee"];
 
@@ -26,23 +24,8 @@ const UserTable: React.FC = () => {
     handleDeleteUser,
   } = useUsersTable({ itemsPerPage: 5 });
 
-  const {
-    addUser,
-    updateUser,
-    editingUser,
-    isModalOpen,
-    openCreateModal,
-    closeModal,
-  } = useUsers();
-
   return (
     <div>
-      <button
-        onClick={openCreateModal}
-        className="mb-4 px-4 py-2 bg-indigo-600 text-white rounded-md"
-      >
-        Add User
-      </button>
       <FilterSearchBar
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
@@ -116,15 +99,6 @@ const UserTable: React.FC = () => {
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <UserForm
-            onSubmit={editingUser ? updateUser : addUser}
-            initialUser={editingUser}
-            onCancel={closeModal}
-          />
-        </div>
-      )}
     </div>
   );
 };

@@ -2,59 +2,44 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Group } from "@/types";
 
 interface GroupState {
-  groups: Group[];
-  searchQuery: string;
-  filterStatus: string;
-  currentPage: number;
-  editingGroup: Group | null;
+  group: Group | null;
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: GroupState = {
-  groups: [],
-  searchQuery: "",
-  filterStatus: "all",
-  currentPage: 1,
-  editingGroup: null,
+  group: null,
+  loading: false,
+  error: null,
 };
 
 const groupSlice = createSlice({
   name: "group",
   initialState,
   reducers: {
-    setGroups: (state, action: PayloadAction<Group[]>) => {
-      state.groups = action.payload;
+    fetchGroupStart: (state) => {
+      state.loading = true;
+      state.error = null;
     },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload;
+    fetchGroupSuccess: (state, action: PayloadAction<Group>) => {
+      state.loading = false;
+      state.group = action.payload;
     },
-    setFilterStatus: (state, action: PayloadAction<string>) => {
-      state.filterStatus = action.payload;
+    fetchGroupFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
     },
-    setCurrentPage: (state, action: PayloadAction<number>) => {
-      state.currentPage = action.payload;
-    },
-    startEditing: (state, action: PayloadAction<Group>) => {
-      state.editingGroup = action.payload;
-    },
-    clearEditing: (state) => {
-      state.editingGroup = null;
-    },
-    deleteGroup: (state, action: PayloadAction<string>) => {
-      state.groups = state.groups.filter(
-        (group) => group._id !== action.payload
-      );
+    clearGroupError: (state) => {
+      state.error = null;
     },
   },
 });
 
 export const {
-  setGroups,
-  setSearchQuery,
-  setFilterStatus,
-  setCurrentPage,
-  startEditing,
-  clearEditing,
-  deleteGroup,
+  fetchGroupStart,
+  fetchGroupSuccess,
+  fetchGroupFailure,
+  clearGroupError,
 } = groupSlice.actions;
 
-export const groupsReducer = groupSlice.reducer;
+export const groupReducers = groupSlice.reducer;

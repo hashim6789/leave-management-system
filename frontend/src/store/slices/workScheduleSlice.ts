@@ -1,89 +1,45 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { WorkSchedule } from "@/types/work-schedule";
+import type { WorkSchedule } from "@/types";
 
 interface WorkScheduleState {
-  schedules: WorkSchedule[];
-  editingSchedule: WorkSchedule | null;
-  isModalOpen: boolean;
-  searchQuery: string;
-  filterStatus: string;
-  currentPage: number;
+  workSchedule: WorkSchedule | null;
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: WorkScheduleState = {
-  schedules: [],
-  editingSchedule: null,
-  isModalOpen: false,
-  searchQuery: "",
-  filterStatus: "all",
-  currentPage: 1,
+  workSchedule: null,
+  loading: false,
+  error: null,
 };
 
 const workScheduleSlice = createSlice({
   name: "workSchedule",
   initialState,
   reducers: {
-    setSchedules: (state, action: PayloadAction<WorkSchedule[]>) => {
-      state.schedules = action.payload;
+    fetchWorkScheduleStart: (state) => {
+      state.loading = true;
+      state.error = null;
     },
-    addSchedule: (state, action: PayloadAction<WorkSchedule>) => {
-      state.schedules.push({ ...action.payload, createdAt: new Date() });
-      state.isModalOpen = false;
+    fetchWorkScheduleSuccess: (state, action: PayloadAction<WorkSchedule>) => {
+      state.loading = false;
+      state.workSchedule = action.payload;
     },
-    updateSchedule: (state, action: PayloadAction<WorkSchedule>) => {
-      state.schedules = state.schedules.map((schedule) =>
-        schedule.name === action.payload.name ? action.payload : schedule
-      );
-      state.editingSchedule = null;
-      state.isModalOpen = false;
+    fetchWorkScheduleFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
     },
-    deleteSchedule: (state, action: PayloadAction<string>) => {
-      state.schedules = state.schedules.filter(
-        (schedule) => schedule.name !== action.payload
-      );
-    },
-    startEditing: (state, action: PayloadAction<WorkSchedule>) => {
-      state.editingSchedule = action.payload;
-      state.isModalOpen = true;
-    },
-    openCreateModal: (state) => {
-      state.editingSchedule = null;
-      state.isModalOpen = true;
-    },
-    closeModal: (state) => {
-      state.editingSchedule = null;
-      state.isModalOpen = false;
-    },
-    resetForm: (state) => {
-      state.editingSchedule = null;
-      state.isModalOpen = false;
-    },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload;
-      state.currentPage = 1; // Reset to first page on search
-    },
-    setFilterStatus: (state, action: PayloadAction<string>) => {
-      state.filterStatus = action.payload;
-      state.currentPage = 1; // Reset to first page on filter change
-    },
-    setCurrentPage: (state, action: PayloadAction<number>) => {
-      state.currentPage = action.payload;
+    clearWorkScheduleError: (state) => {
+      state.error = null;
     },
   },
 });
 
 export const {
-  addSchedule,
-  updateSchedule,
-  deleteSchedule,
-  startEditing,
-  openCreateModal,
-  closeModal,
-  resetForm,
-  setSearchQuery,
-  setFilterStatus,
-  setCurrentPage,
-  setSchedules,
+  fetchWorkScheduleStart,
+  fetchWorkScheduleSuccess,
+  fetchWorkScheduleFailure,
+  clearWorkScheduleError,
 } = workScheduleSlice.actions;
 
 export const workScheduleReducers = workScheduleSlice.reducer;

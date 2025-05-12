@@ -1,5 +1,6 @@
 export const groupMessages = {
   FETCH_GROUP_FAILED: "Failed to fetch groups",
+  FETCH_GROUP_SUCCESS: "Group fetched successfully",
   CREATE_SUCCESS: "Group created successfully",
   CREATE_FAILED: "Failed to create group",
   UPDATE_SUCCESS: "Group updated successfully",

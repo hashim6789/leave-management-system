@@ -56,6 +56,20 @@ export async function updateScheduleService(
   }
 }
 
+export async function fetchWorkScheduleByIdService(
+  id: string
+): Promise<ApiResponse<WorkSchedule>> {
+  try {
+    const response = await api.get<WorkSchedule>(`/work-schedules/${id}`);
+    showSuccess(scheduleMessages.FETCH_SUCCESS);
+    return { data: response.data, status: response.status };
+  } catch (error: unknown) {
+    const message = getAxiosErrorMessage(error, scheduleMessages.FETCH_FAILED);
+    showError(message);
+    throw new Error(message);
+  }
+}
+
 export async function deleteScheduleService(
   id: string
 ): Promise<ApiResponse<void>> {

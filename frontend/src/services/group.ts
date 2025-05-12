@@ -65,3 +65,19 @@ export async function deleteGroupService(
     throw new Error(message);
   }
 }
+export async function fetchGroupByIdService(
+  groupId: string
+): Promise<ApiResponse<Group>> {
+  try {
+    const response = await api.get<Group>(`/groups/${groupId}`);
+    showSuccess(groupMessages.FETCH_GROUP_SUCCESS);
+    return { data: response.data, status: response.status };
+  } catch (error: unknown) {
+    const message = getAxiosErrorMessage(
+      error,
+      groupMessages.FETCH_GROUP_FAILED
+    );
+    showError(message);
+    throw new Error(message);
+  }
+}

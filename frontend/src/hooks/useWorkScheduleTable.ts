@@ -7,7 +7,7 @@ import {
   deleteSchedule,
   startEditing,
   setSchedules,
-} from "@/store/slices/workScheduleSlice";
+} from "@/store/slices/workScheduleManagementSlice";
 import type { WorkSchedule } from "@/types";
 import { getSchedulesService } from "@/services";
 

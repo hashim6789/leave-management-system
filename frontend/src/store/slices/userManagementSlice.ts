@@ -55,4 +55,4 @@ export const {
   deleteUser,
 } = userSlice.actions;
 
-export const usersReducers = userSlice.reducer;
+export const usersManagementReducers = userSlice.reducer;

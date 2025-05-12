@@ -1,9 +1,9 @@
 import Layout from "@/pages/Layout";
 import ProtectedRoute from "./ProtectedRoute";
-import AdminDashboard from "@/pages/AdminDashboard";
-import AdminScheduleManagement from "@/pages/AdminWorkScheduleManagemnt";
-import AdminUserManagement from "@/pages/AdminUserManagement";
-import AdminGroupManagement from "@/pages/AdminGroupManagement";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminScheduleManagement from "@/pages/admin/AdminWorkScheduleManagemnt";
+import AdminUserManagement from "@/pages/admin/AdminUserManagement";
+import AdminGroupManagement from "@/pages/admin/AdminGroupManagement";
 
 export const AdminRoutes = () => [
   {

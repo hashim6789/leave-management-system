@@ -29,13 +29,13 @@ export const AdminSidebarItems: SidebarContent[] = [
     icon: Users,
   },
   {
-    path: "/admin/users",
-    name: "Users",
+    path: "/admin/groups",
+    name: "User Groups",
     icon: Users,
   },
   {
-    path: "/admin/groups",
-    name: "User Groups",
+    path: "/admin/users",
+    name: "Users",
     icon: Users,
   },
   // {

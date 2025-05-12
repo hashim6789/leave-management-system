@@ -7,7 +7,7 @@ import {
   deleteUser,
   startEditing,
   setUsers,
-} from "@/store/slices/userSlice";
+} from "@/store/slices/userManagementSlice";
 import { getUsersService } from "@/services";
 import type { User } from "@/types";
 import { useDebounce } from "./useDebounce";

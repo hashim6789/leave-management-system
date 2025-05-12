@@ -10,7 +10,7 @@ import {
   clearEditing,
   startEditing,
   deleteGroup,
-} from "@/store/slices/groupSlice";
+} from "@/store/slices/groupManagementSlice";
 import type { Group } from "@/types";
 
 export const useGroups = () => {

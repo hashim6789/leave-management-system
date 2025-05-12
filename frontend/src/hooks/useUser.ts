@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { createUserService, updateUserService } from "@/services";
 import { getGroupsService } from "@/services";
-import { setUsers, clearEditing, startEditing } from "@/store/slices/userSlice";
+import {
+  setUsers,
+  clearEditing,
+  startEditing,
+} from "@/store/slices/userManagementSlice";
 import type { User, Group } from "@/types";
 
 export const useUsers = () => {
