@@ -1,4 +1,4 @@
-import { createGroupComposer, getGroupsComposer } from '@/composers';
+import { createGroupComposer, getGroupByIdComposer, getGroupsComposer } from '@/composers';
 import { expressAdapter } from '@/http/adapter';
 import { verifyTokenMiddleware } from '@/middlewares';
 import { Request, Response, Router } from 'express';
@@ -17,6 +17,14 @@ groupRouter.post(
   },
 );
 
+groupRouter.get(
+  '/:groupId',
+  verifyTokenMiddleware(['admin', 'approver', 'employee']),
+  async (request: Request, response: Response) => {
+    const adapter = await expressAdapter(request, getGroupByIdComposer());
+    response.status(adapter.statusCode).json(adapter.body);
+  },
+);
 groupRouter.get(
   '/',
   verifyTokenMiddleware(['admin', 'approver']),

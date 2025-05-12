@@ -7,4 +7,5 @@ export const authResponse = {
   INCORRECT_EMAIL_OR_PASSWORD: 'Incorrect email or password!',
   USER_IS_BLOCKED: 'User is blocked!',
   INVALID_ROLE: 'Invalid Role!',
+  YOU_HAVE_NO_ACCESS: 'You have no access',
 } as const;

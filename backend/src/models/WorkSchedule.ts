@@ -6,9 +6,10 @@ export interface IWorkSchedule extends Document {
   name: string;
   type: ScheduleType;
   weeklySchedule: DailySchedule[];
-  startTime: { type: String };
-  endTime: { type: String };
-  duration: { type: Number };
+  startTime: string;
+  endTime: string;
+  requiredHours: number;
+  requiresApproval: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -25,7 +26,8 @@ const workScheduleSchema = new Schema<IWorkSchedule>(
     weeklySchedule: [dailyScheduleSchema],
     startTime: { type: String },
     endTime: { type: String },
-    duration: { type: Number },
+    requiredHours: { type: Number },
+    requiresApproval: { type: Boolean },
   },
   {
     timestamps: true,
